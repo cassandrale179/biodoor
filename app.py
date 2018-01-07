@@ -92,6 +92,7 @@ def letmein():
 
         #-----------  CALL THE TEST MAIN FUNCTION AGAIN ----------------
         test.testmain(owner)
+        return render_template('index.html')
 
 #---------------- RUN THE APP -----------------
 if __name__ == "__main__":

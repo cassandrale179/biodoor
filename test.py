@@ -108,7 +108,7 @@ def predict(testImage, owner):
     return img
 
 #---------------------- INPUTTING IMAGE HERE FOR TESTING ------------
-def testmain(owner, img_name):
+def testmain(owner):
 # if __name__ == '__main__':
     db.child('signal').update({
             'doorOpen': 0
