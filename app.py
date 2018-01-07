@@ -6,8 +6,9 @@ import os
 import cv2
 import time
 import test
-
 app = Flask(__name__)
+
+owner = ""
 
 
 #-------------------- INITIALIZE FIREBASE -------------------
@@ -34,9 +35,11 @@ def main():
 #------------------- GET THE VARIABLES ------------
 @app.route("/send", methods=['POST','GET'])
 def send():
+    global owner
     #------------- IF YOU CLICK SEND BUTTON ------
     if request.method == 'POST':
         name = request.form['name']
+        owner = name
 
         #------ THE CODE TO OPEN THE WEBCAM ------
         cam = cv2.VideoCapture(0)
@@ -59,16 +62,36 @@ def send():
             break
         cam.release()
         cv2.destroyAllWindows()
-        test.testmain(name)
         return render_template('age.html', name=name)
     else:
         return render_template('index.html')
 
 @app.route("/letmein", methods=['POST', 'GET'])
 def letmein():
+    global owner
     # ------------- IF YOU CLICK LET ME IN BUTTON ------
     if request.method == 'POST':
-        print("Let Me In button is pressed")
+
+        #-------- SECRETLY TAKE ONE PICTURE ----------------
+        cam = cv2.VideoCapture(0)
+        cv2.namedWindow("test")
+        img_counter = 0
+        ret, frame = cam.read()
+        cv2.imshow("test", frame)
+        t0 = time.clock()
+        wait_time = 0
+        while wait_time < 3:
+            wait_time = time.clock()-t0
+        ret, frame = cam.read()
+        cv2.imshow("test", frame)
+        img_name = "pic.png"
+        cv2.imwrite(img_name, frame)
+        print("{} written!".format(img_name))
+        cam.release()
+        cv2.destroyAllWindows()
+
+        #-----------  CALL THE TEST MAIN FUNCTION AGAIN ----------------
+        test.testmain(owner)
 
 #---------------- RUN THE APP -----------------
 if __name__ == "__main__":

@@ -108,13 +108,13 @@ def predict(testImage, owner):
     return img
 
 #---------------------- INPUTTING IMAGE HERE FOR TESTING ------------
-def testmain(owner):
+def testmain(owner, img_name):
 # if __name__ == '__main__':
     db.child('signal').update({
             'doorOpen': 0
     })
     print("Predicting images...")
-    test_img1 = cv2.imread(os.path.join(cwd, 'stranger.png'))
+    test_img1 = cv2.imread(os.path.join(cwd, "pic.png"))
     predicted_img1 = predict(test_img1, owner)
     print("Prediction complete")
 
