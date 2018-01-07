@@ -82,7 +82,7 @@ def draw_text(img, text, x, y):
 #---------------------- FACE PREDICTION ------------------
 def predict(testImage, owner):
     global face_recognizer
-    subjects = ["", owner, "Tai"]
+    subjects = ["", owner]
     img = testImage.copy()
     face, rect = detect_face(img)
     print face
@@ -90,7 +90,7 @@ def predict(testImage, owner):
 
     #------------- IF IT'S A GOOD MATCH (THRESHOLD UNDER 100) ----------
     print("Confidence level", confidence)
-    if (confidence < 70) and (confidence != 0):
+    if (confidence < 100) and (confidence != 0):
         label_text = subjects[label]
         print("This picture is the owner")
         #Push the signal to firebase

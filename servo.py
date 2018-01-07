@@ -34,21 +34,26 @@ def openDoor():
         setAngle(90)
         time.sleep(5)
         setAngle(0)
-        print "Open door"
+        print ("Open door")
 
 def lockDoor():
         setAngle(0)
-        print "Lock door"
+        print ("Lock door")
+        
+while True:
+    signal_to_servo = list(db.child('signal').get().val().values())[0]
+    print (signal_to_servo)
+    while signal_to_servo == 0:
+            signal_to_servo = list(db.child('signal').get().val().values())[0]
+            print (signal_to_servo)
+            time.sleep(0.05)
 
-signal_to_servo = db.child('signal').get().key()
-while signal_to_servo == 0:
-        signal_to_servo = db.child('signal').get().key()
-        time.sleep(0.05)
-
-if signal_to_servo == 1:
-        openDoor()
-else:
-        lockDoor()
+    if signal_to_servo == 1:
+            openDoor()
+    elif signal_to_servo == 2:
+            lockDoor()
+    
+    time.sleep(0.5)
 
 
 
