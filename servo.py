@@ -5,8 +5,8 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(14, GPIO.OUT)
-pwm = GPIO.PWM(14, 50)
-pwm.start(0)
+pwm = GPIO.PWM(14, 500)
+pwm.start(15)
 
 config = {
     "apiKey": "AIzaSyBiBNGannX7FelsOzvJMuqAmkqhVykrxIc",
@@ -29,15 +29,17 @@ def setAngle(angle):
         GPIO.output(14, False)
         pwm.ChangeDutyCycle(0)
 
-
 def openDoor():
-        setAngle(90)
+        pwm.start(40)
         time.sleep(5)
-        setAngle(0)
+        pwm.start(15)
         print ("Open door")
+        db.child('signal').update({
+            'doorOpen': 0       # Reset
+        })
 
 def lockDoor():
-        setAngle(0)
+        setAngle(10)
         print ("Lock door")
         
 while True:
@@ -52,7 +54,7 @@ while True:
             openDoor()
     elif signal_to_servo == 2:
             lockDoor()
-    
+    pwm.stop()
     time.sleep(0.5)
 
 
