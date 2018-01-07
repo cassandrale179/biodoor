@@ -6,8 +6,8 @@ import os
 import cv2
 import time
 import test
-app = Flask(__name__)
 
+app = Flask(__name__)
 owner = ""
 
 

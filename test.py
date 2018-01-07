@@ -3,6 +3,9 @@ import cv2
 import os
 import pyrebase
 import downloadPicture
+from twilio.rest import Client
+
+#------------------------ FIREBASE CONFIG ----------------
 config = {
     "apiKey": "AIzaSyBiBNGannX7FelsOzvJMuqAmkqhVykrxIc",
     "authDomain": "cognizer-7f557.firebaseapp.com",
@@ -12,9 +15,14 @@ config = {
     "messagingSenderId": "311655476959"
 }
 firebase = pyrebase.initialize_app(config)
-
 storage = firebase.storage()
 db  = firebase.database()
+
+
+#------------------- TWILIO API ----------------------------
+account_sid = "ACa25b9e68025c8db22bb5d85e4e930cc5"
+auth_token = "b3914f78318a81ab0603b02b2256ff93"
+client = Client(account_sid, auth_token)
 
 #--------------------GET CURRENT DIRECTORY PATH ---------------
 cwd = os.getcwd()
@@ -81,8 +89,11 @@ def draw_text(img, text, x, y):
 
 #---------------------- FACE PREDICTION ------------------
 def predict(testImage, owner):
+
+    #---------------- GLOBAL VARIABLES TO BE USED ----------
     global face_recognizer
-    subjects = ["", owner, "Tai"]
+    global client
+    subjects = ["", owner]
     img = testImage.copy()
     face, rect = detect_face(img)
     print face
@@ -90,26 +101,34 @@ def predict(testImage, owner):
 
     #------------- IF IT'S A GOOD MATCH (THRESHOLD UNDER 100) ----------
     print("Confidence level", confidence)
-    if (confidence < 70) and (confidence != 0):
+    if (confidence < 100) and (confidence != 0):
         label_text = subjects[label]
         print("This picture is the owner")
         #Push the signal to firebase
         db.child('signal').update({
             'doorOpen': 1       # It's the OWNER
         })
+
+    #------------ IF IT'S NOT A GOOD MATCH -------------------
     else:
         label_text = "Not sure who this is"
         print("This picture is not the owner")
         db.child('signal').update({
             'doorOpen': 2       # It's a THIEF
         })
+        message = client.messages.create(
+        to="+15512326269",
+        from_="+15595408466 ",
+        body="There's an INTRUDER!!!!!!")
+        print(message.sid)
+
+    #----------------- DISPLAY PICTURE OF PERSON AND LABEL THEM -----------
     draw_rectangle(img, rect)
     draw_text(img, label_text, rect[0], rect[1]-5)
     return img
 
 #---------------------- INPUTTING IMAGE HERE FOR TESTING ------------
 def testmain(owner):
-# if __name__ == '__main__':
     db.child('signal').update({
             'doorOpen': 0
     })
