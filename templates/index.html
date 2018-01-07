@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Cognizer</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='js/jquery-3.2.1.js') }}">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='js/signUp.js') }}">
+
+	</head>
+	<body>
+
+		<!-- Header -->
+			<section id="header">
+				<div class="inner">
+					<span class="icon major fa-cloud"></span>
+					<h1>Biometric Door</p>
+          <h4>A door that will unlock if it recognizes your face.</h4>
+					<ul class="actions">
+						<li><a href="#three" class="button scrolly">Try App</a></li>
+					</ul>
+				</div>
+			</section>
+
+		<!-- Three -->
+			<section id="three" class="main style1 special">
+				<div class="container">
+					<header class="major">
+						<h2>How does it works?</h2>
+					</header>
+					<p>The door will first study your face and know that you are owner of the house. Next time you are in front of it, the door will remember you and let you in </p>
+					<div class="row 150%">
+						<div class="4u 12u$(medium)">
+							<span class="image fit"><img src="images/pic02.jpg" alt="" /></span>
+							<h3>Input Your Name</h3>
+              <p>
+                Type your name, then go to Step 2. Once you click Snap, your name will be stored in the database.
+              </p>
+								<form method="POST" action="/send">
+                <input type="text" name="name" id="name" placeholder="John Doe"/>
+
+						</div>
+						<div class="4u 12u$(medium)">
+							<span class="image fit"><img src="images/pic03.jpg" alt="" /></span>
+							<h3>Go to Webcam</h3>
+							<p>Press button below to trigger webcam. The computer will take 10 shots of your face within 1 second. </p>
+							<ul class="actions">
+								<li><input class="button" type="submit" value="Snap"></li>
+								</form>
+							</ul>
+						</div>
+						<div class="4u$ 12u$(medium)">
+							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
+							<h3>Try the Door</h3>
+							<p>Now stand in front of the door and put your face in front of camera. Press Let Me In once you are ready to trigger face recognition.</p>
+							<ul class="actions">
+								<form method="POST" action="/letmein">
+								<li><input class="button" type="submit" value="LetMeIn"></li>
+								</form>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		<!-- Four -->
+			<section id="four" class="main style2 special">
+				<div class="container">
+					<header class="major">
+						<h2>Wanna Learn More?</h2>
+					</header>
+					<p>Website is built using Flask and Pyrebase. Door is controlled by a Raspberri Pi. Face recognition is done using OpenCV.</p>
+					<ul class="actions uniform">
+						<li><a href="#" class="button special">Sign Up</a></li>
+						<li><a href="#" class="button">Learn More</a></li>
+					</ul>
+				</div>
+			</section>
+
+
+
+		<!-- Footer -->
+			<section id="footer">
+				<ul class="icons">
+					<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+					<li><a href="#" class="icon alt fa-terminal"><span class="label">Devpost</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; DragonHacks 2018</li><li> Built by Vietnamese Squad</li>
+				</ul>
+			</section>
+
+	</body>
+</html>
