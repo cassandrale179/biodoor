@@ -4,6 +4,10 @@ import os
 import pyrebase
 import downloadPicture
 from twilio.rest import Client
+# import win32com.client as wincl
+import ttsTest
+# speak = wincl.Dispatch("SAPI.SpVoice")
+
 
 #------------------------ FIREBASE CONFIG ----------------
 config = {
@@ -93,6 +97,7 @@ def predict(testImage, owner):
     #---------------- GLOBAL VARIABLES TO BE USED ----------
     global face_recognizer
     global client
+    global speak
     subjects = ["", owner]
     img = testImage.copy()
     face, rect = detect_face(img)
@@ -101,16 +106,22 @@ def predict(testImage, owner):
 
     #------------- IF IT'S A GOOD MATCH (THRESHOLD UNDER 100) ----------
     print("Confidence level", confidence)
-    if (confidence < 100) and (confidence != 0):
+    if (confidence < 130) and (confidence != 0):
         label_text = subjects[label]
+        ttsTest.speakNow(owner)
         print("This picture is the owner")
         #Push the signal to firebase
         db.child('signal').update({
             'doorOpen': 1       # It's the OWNER
         })
+        # str_speech = "Welcome home " + owner
+        # speak.Speak(str_speech)
 
     #------------ IF IT'S NOT A GOOD MATCH -------------------
     else:
+        ttsTest.intruder()
+        # str_speech = "INTRUDER ALERT INTRUDER ALERT GET OUT OF MY F ing HOUSE!"
+        # speak.Speak(str_speech)
         label_text = "Not sure who this is"
         print("This picture is not the owner")
         db.child('signal').update({

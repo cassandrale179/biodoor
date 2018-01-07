@@ -14,5 +14,9 @@
 import win32com.client as wincl
 speak = wincl.Dispatch("SAPI.SpVoice")
 def speakNow(name):
-    str_speech = "Welcome home " + name
+    str_speech = "Welcome home" + name
+    speak.Speak(str_speech)
+
+def intruder():
+    str_speech = "INTRUDER ALERT INTRUDER ALERT GET OUT OF MY F ING HOUSE"
     speak.Speak(str_speech)
