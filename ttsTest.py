@@ -13,5 +13,6 @@
 
 import win32com.client as wincl
 speak = wincl.Dispatch("SAPI.SpVoice")
-str_speech = "Welcome home " + name
-speak.Speak(str_speech)
+def speakNow(name):
+    str_speech = "Welcome home " + name
+    speak.Speak(str_speech)
