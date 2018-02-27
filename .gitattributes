@@ -1,4 +1,2 @@
-*.css  linguist-vendored=true 
+*.css  linguist-vendored=true
 
-# Auto detect text files and perform LF normalization
-* text=auto
