@@ -1,5 +1,4 @@
-static/* linguist-vendored 
-template/assets/* linguist-vendored 
+*.css  linguist-vendored=true 
 
 # Auto detect text files and perform LF normalization
 * text=auto
